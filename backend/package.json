@@ -1,0 +1,26 @@
+{
+  "name": "chat_test",
+  "version": "1.0.0",
+  "description": "chatApp test grounds",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "lint": "./node_modules/.bin/eslint",
+    "start-server": "nodemon ./server.js"
+  },
+  "keywords": [
+    "test",
+    "chat"
+  ],
+  "author": "nii",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^9.3.0",
+    "nodemon": "^3.1.0"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongodb": "^6.6.2"
+  },
+  "type": "module"
+}
