@@ -1,4 +1,4 @@
-import { MongoClient, ServerApiVersion } from "mongodb";
+import { MongoClient, ServerApiVersion, ObjectId } from "mongodb";
 
 // const host = process.env.DB_HOST || 'localhost';
 // const port = process.env.DB_PORT || 27017;
@@ -56,7 +56,7 @@ class DBClient {
 
   async findUserById(userId) {
     const collection = this.db.collection("users");
-    const user = await collection.findOne({ _id: userId });
+    const user = await collection.findOne({ _id: new ObjectId(userId) });
     if (user) {
       return user;
     }
@@ -66,6 +66,66 @@ class DBClient {
   async createUser(displayName, email, password) {
     const collection = this.db.collection("users");
     await collection.insertOne({ displayName, email, password });
+  }
+
+  async getUserRooms(roomIds) {
+    const collection = this.db.collection("rooms");
+    let rooms = [];
+    for (const roomId of roomIds) {
+      const room = await collection.findOne({ _id: new ObjectId(roomId) });
+      if (room) rooms.push(room);
+    }
+    return rooms;
+  }
+
+  async createRoom(userId, name) {
+    const usersCollection = this.db.collection("users");
+    const roomsCollection = this.db.collection("rooms");
+
+    const room = {
+      name,
+      owner: userId,
+      members: [userId],
+    };
+    const result = await roomsCollection.insertOne(room);
+    const newRoom = await roomsCollection.findOne({ _id: result.insertedId });
+    if (!newRoom) {
+      console.log("didn't create new room");
+      console.log("result", result);
+      return false;
+    }
+    const updateUser = await usersCollection.updateOne(
+      { _id: userId },
+      { $push: { rooms: newRoom._id } }
+    );
+    if (!updateUser.acknowledged) return false;
+
+    return newRoom;
+  }
+
+  async joinRoom(userId, roomId) {
+    const usersCollection = this.db.collection("users");
+    const roomsCollection = this.db.collection("rooms");
+    try {
+      new ObjectId(roomId);
+    } catch (err) {
+      console.log("not valid room id");
+      return false;
+    }
+
+    const updateRoom = await roomsCollection.updateOne(
+      { _id: new ObjectId(roomId) },
+      { $push: { members: userId } }
+    );
+    if (!updateRoom.acknowledged) return false;
+
+    const updateUser = await usersCollection.updateOne(
+      { _id: userId },
+      { $push: { rooms: roomId } }
+    );
+    if (!updateUser.acknowledged) return false;
+
+    return true;
   }
 }
 
