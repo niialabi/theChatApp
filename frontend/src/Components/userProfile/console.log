@@ -1,0 +1,4 @@
+toggleInfo = (e) => {
+  console.log(e.target);
+  e.target.parentNode.parentNode.classList.toggle("open");
+};
