@@ -1,0 +1,35 @@
+.settings {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-left: 1px solid #ddd;
+    height: 100%;
+    width: 300px;
+  }
+  
+  .settings h2 {
+    margin-bottom: 20px;
+  }
+  
+  .setting-item {
+    margin-bottom: 20px;
+  }
+  
+  .setting-item label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .setting-item input[type="checkbox"] {
+    transform: scale(1.5);
+  }
+  
+  .setting-item select {
+    width: 100%;
+    padding: 5px;
+    font-size: 1em;
+  }
+
+  .main__chatlist {
+    border-right: 1px solid #ebe7fb;
+    padding: 0 40px 0 0px;
+  }
