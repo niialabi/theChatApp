@@ -2,6 +2,7 @@ import express from "express";
 import * as AppController from "../controllers/AppController.js";
 import * as UsersController from "../controllers/UsersController.js";
 import * as AuthController from "../controllers/AuthController.js";
+import * as RoomsController from "../controllers/RoomsController.js";
 
 const router = express.Router();
 
@@ -19,6 +20,15 @@ router.get("/disconnect", (req, res) => {
 });
 router.get("/users/me", (req, res) => {
   UsersController.getMe(req, res);
+});
+router.get("/rooms", (req, res) => {
+  RoomsController.getRooms(req, res);
+});
+router.post("/rooms", (req, res) => {
+  RoomsController.createRoom(req, res);
+});
+router.post("/rooms/:id", (req, res) => {
+  RoomsController.joinRoom(req, res);
 });
 
 export default router;
