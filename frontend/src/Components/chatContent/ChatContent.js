@@ -1,7 +1,7 @@
 import React, { Component, useState, createRef, useEffect } from "react";
 
 import "./chatContent.css";
-import Avatar from "../chatmessege/Avatar";
+import Avatar from "../chatMessege/Avatar";
 import ChatItem from "./ChatItem";
 
 export default class ChatContent extends Component {
