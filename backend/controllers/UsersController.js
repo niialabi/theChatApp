@@ -6,13 +6,13 @@ import * as userUtils from "../utils/users.js";
 export async function postNew(req, res) {
   const { displayName, email, password } = req.body;
   if (!email) {
-    res.status(400).json({ error: "Missing email" });
+    return res.status(400).json({ error: "Missing email" });
   }
   if (!password) {
-    res.status(400).json({ error: "Missing password" });
+    return res.status(400).json({ error: "Missing password" });
   }
   if (!displayName) {
-    res.status(400).json({ error: "Missing displayName" });
+    return res.status(400).json({ error: "Missing displayName" });
   }
 
   const hashedPassword = sha1(password);
