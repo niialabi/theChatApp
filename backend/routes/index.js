@@ -3,6 +3,7 @@ import * as AppController from "../controllers/AppController.js";
 import * as UsersController from "../controllers/UsersController.js";
 import * as AuthController from "../controllers/AuthController.js";
 import * as RoomsController from "../controllers/RoomsController.js";
+import * as MessagesController from "../controllers/MessagesController.js";
 
 const router = express.Router();
 
@@ -29,6 +30,15 @@ router.post("/rooms", (req, res) => {
 });
 router.post("/rooms/:id", (req, res) => {
   RoomsController.joinRoom(req, res);
+});
+router.get("/rooms/:roomId/messages", (req, res) => {
+  MessagesController.getMessages(req, res);
+});
+router.get("/profile", (req, res) => {
+  UsersController.getProfile(req, res);
+});
+router.post("/profile/bio", (req, res) => {
+  UsersController.updateBio(req, res);
 });
 
 export default router;

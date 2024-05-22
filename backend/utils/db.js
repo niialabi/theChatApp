@@ -86,6 +86,7 @@ class DBClient {
       name,
       owner: userId,
       members: [userId],
+      messages: [],
     };
     const result = await roomsCollection.insertOne(room);
     const newRoom = await roomsCollection.findOne({ _id: result.insertedId });
@@ -125,6 +126,29 @@ class DBClient {
     );
     if (!updateUser.acknowledged) return false;
 
+    return true;
+  }
+
+  async getMessages(roomId) {
+    const collection = this.db.collection("rooms");
+    try {
+      new ObjectId(roomId);
+    } catch (err) {
+      console.log("not valid room id");
+      return false;
+    }
+    const room = await collection.findOne({ _id: new ObjectId(roomId) });
+    if (!room) return false;
+    return room.messages;
+  }
+
+  async updateBio(userId, bio) {
+    const collection = this.db.collection("users");
+    const result = await collection.updateOne(
+      { _id: userId },
+      { $set: { [bio]: bio } }
+    );
+    if (!result.acknowledged) return false;
     return true;
   }
 }
