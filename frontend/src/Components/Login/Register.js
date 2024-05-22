@@ -1,31 +1,29 @@
-import React from "react";
-import makeToast from "../Toaster";
+import React, { useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "./Login.css";
+import makeToast from "../Toaster";
+import "./Register.css";
 
-const Login = (props) => {
-  const userNameRef = React.createRef(); 
-  const emailRef = React.createRef();
-  const passwordRef = React.createRef();
+const Register = () => {
+  const nameRef = useRef();
+  const emailRef = useRef();
+  const passwordRef = useRef();
   const navigate = useNavigate();
 
-  const loginUser = () => {
-    const userName = userNameRef.current.value; 
+  const registerUser = () => {
+    const name = nameRef.current.value;
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
 
     axios
-      .post("http://5000/user/login", {
-        userName,
+      .post("http://localhost:5000/user/register", {
+        name,
         email,
         password,
       })
       .then((response) => {
         makeToast("success", response.data.message);
-        localStorage.setItem("CC_Token", response.data.token);
-        navigate("/ChatBody");
-        props.setupSocket();
+        navigate("/login");
       })
       .catch((err) => {
         if (
@@ -33,23 +31,24 @@ const Login = (props) => {
           err.response &&
           err.response.data &&
           err.response.data.message
-        )
+        ) {
           makeToast("error", err.response.data.message);
+        }
       });
   };
 
   return (
     <div className="card">
-      <div className="cardHeader">Login</div>
+      <div className="cardHeader">Registration</div>
       <div className="cardBody">
         <div className="inputGroup">
-          <label htmlFor="userName">Username</label>
+          <label htmlFor="name">Name</label>
           <input
             type="text"
-            name="userName"
-            id="userName"
-            placeholder="Your Username"
-            ref={userNameRef} 
+            name="name"
+            id="name"
+            placeholder="Glad Doe"
+            ref={nameRef}
           />
         </div>
         <div className="inputGroup">
@@ -72,10 +71,10 @@ const Login = (props) => {
             ref={passwordRef}
           />
         </div>
-        <button onClick={loginUser}>Login</button>
+        <button onClick={registerUser}>Register</button>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Register;
