@@ -14,6 +14,7 @@ export default class ChatMessageItems extends Component {
       e.currentTarget.parentNode.children[index].classList.remove("active");
     }
     e.currentTarget.classList.add("active");
+    this.props.onSelectChat(this.props.id);
   };
 
   render() {
