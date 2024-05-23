@@ -22,6 +22,10 @@ export async function createRoom(req, res) {
     if (!user) return res.status(401).send({ error: "Unauthorized" });
     const { name } = req.body;
     if (!name) return res.status(400).send({ error: "Missing name" });
+    // check if the room already exists
+    const checkRoom = await dbClient.findRoom(name)
+    if (checkRoom)
+    return res.status(400).send({ error: "Room already exists" });
     // creates a new room chat
     const room = await dbClient.createRoom(user._id, name);
     if (!room) return res.status(500).send({ error: "internal server error" });

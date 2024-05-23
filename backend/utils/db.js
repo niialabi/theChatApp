@@ -151,6 +151,13 @@ class DBClient {
     if (!result.acknowledged) return false;
     return true;
   }
+
+  async findRoom(name) {
+    const roomsCollection = this.db.collection("rooms");
+    const room = await roomsCollection.findOne({ name: name});
+    if (room) return room;
+    else return false;
+  }
 }
 
 const dbClient = new DBClient();
