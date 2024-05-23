@@ -1,40 +1,34 @@
 import React from "react";
-import makeToast from "../Toaster";
 import axios from "axios";
+import makeToast from "../Toaster";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
-const Login = (props) => {
-  const userNameRef = React.createRef(); 
+const Signup = (props) => {
+  const userNameRef = React.createRef();
   const emailRef = React.createRef();
   const passwordRef = React.createRef();
   const navigate = useNavigate();
 
-  const loginUser = () => {
-    const userName = userNameRef.current.value; 
+  const signupUser = () => {
+    const userName = userNameRef.current.value;
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
 
     axios
-      .post("http://3000/user/login", {
-        userName,
+      .post("http://localhost:5000/users", {
+        displayName: userName,
         email,
         password,
       })
       .then((response) => {
-        makeToast("success", response.data.message);
-        localStorage.setItem("CC_Token", response.data.token);
-        navigate("/dashboard");
-        props.setupSocket();
+        console.log(response);
+        navigate("/");
       })
       .catch((err) => {
-        if (
-          err &&
-          err.response &&
-          err.response.data &&
-          err.response.data.message
-        )
-          makeToast("error", err.response.data.message);
+        console.log(err);
+        if (err && err.response && err.response.data && err.response.data.error)
+          makeToast("error", err.response.data.error);
       });
   };
 
@@ -49,7 +43,7 @@ const Login = (props) => {
             name="userName"
             id="userName"
             placeholder="Your Username"
-            ref={userNameRef} 
+            ref={userNameRef}
           />
         </div>
         <div className="inputGroup">
@@ -72,10 +66,10 @@ const Login = (props) => {
             ref={passwordRef}
           />
         </div>
-        <button onClick={loginUser}>Login</button>
+        <button onClick={signupUser}>Signup</button>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Signup;
