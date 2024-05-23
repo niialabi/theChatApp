@@ -14,7 +14,7 @@
   font-size: 18px;
   cursor: pointer;
   padding: 10px;
-  color: #dad9dd;
+  color: black;
   outline: none;
 }
 .search_wrap {
@@ -100,7 +100,7 @@
 .chatlist__item .userMeta span {
   margin: 0;
   padding: 0;
-  color: #ceccd3;
+  color: black;
   font-weight: 400;
   font-size: 12px;
   display: block;
@@ -138,3 +138,4 @@
   width: 100%;
   height: 100%;
 }
+
