@@ -23,7 +23,7 @@ const Signup = (props) => {
       })
       .then((response) => {
         console.log(response);
-        navigate("/");
+        navigate("/ChatBody");
       })
       .catch((err) => {
         console.log(err);
@@ -34,7 +34,7 @@ const Signup = (props) => {
 
   return (
     <div className="card">
-      <div className="cardHeader">Login</div>
+      <div className="cardHeader">Create Account</div>
       <div className="cardBody">
         <div className="inputGroup">
           <label htmlFor="userName">Username</label>
