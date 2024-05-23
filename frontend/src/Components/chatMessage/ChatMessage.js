@@ -110,6 +110,12 @@ export default class ChatMessage extends Component {
             <i className="fa fa-ellipsis-h"></i>
           </button>
         </div>
+        <div className="main__chatlist">
+            <button className="btn">
+              <i className="fa fa-plus"></i>
+              <span>New Chat</span>
+           </button>
+        </div>
         <div className="chatList__search">
           <div className="search_wrap">
             <input type="text" placeholder="Search Here" required />
