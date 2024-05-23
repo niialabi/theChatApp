@@ -10,49 +10,49 @@ export default class ChatContent extends Component {
     {
       key: 1,
       image:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?crop=faces&fit=crop&w=200&h=200",
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?crop=faces&fit=crop&w=200&h=200",
       type: "",
       msg: "Hi Tim, How are you?",
     },
     {
       key: 2,
       image:
-      "https://images.unsplash.com/photo-1595152772835-219674b2a8a6?crop=faces&fit=crop&w=200&h=200",
+        "https://images.unsplash.com/photo-1595152772835-219674b2a8a6?crop=faces&fit=crop&w=200&h=200",
       type: "other",
       msg: "I am fine.",
     },
     {
       key: 3,
       image:
-      "https://images.unsplash.com/photo-1595152772835-219674b2a8a6?crop=faces&fit=crop&w=200&h=200",
+        "https://images.unsplash.com/photo-1595152772835-219674b2a8a6?crop=faces&fit=crop&w=200&h=200",
       type: "other",
       msg: "What about you?",
     },
     {
       key: 4,
       image:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?crop=faces&fit=crop&w=200&h=200",
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?crop=faces&fit=crop&w=200&h=200",
       type: "",
       msg: "Awesome these days.",
     },
     {
       key: 5,
       image:
-      "https://images.unsplash.com/photo-1595152772835-219674b2a8a6?crop=faces&fit=crop&w=200&h=200",
+        "https://images.unsplash.com/photo-1595152772835-219674b2a8a6?crop=faces&fit=crop&w=200&h=200",
       type: "other",
       msg: "Finally. What's the plan?",
     },
     {
       key: 6,
       image:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?crop=faces&fit=crop&w=200&h=200",
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?crop=faces&fit=crop&w=200&h=200",
       type: "",
       msg: "what plan mate?",
     },
     {
       key: 7,
       image:
-      "https://images.unsplash.com/photo-1595152772835-219674b2a8a6?crop=faces&fit=crop&w=200&h=200",
+        "https://images.unsplash.com/photo-1595152772835-219674b2a8a6?crop=faces&fit=crop&w=200&h=200",
       type: "other",
       msg: "I'm taliking about the tutorial",
     },
@@ -71,6 +71,7 @@ export default class ChatContent extends Component {
   };
 
   componentDidMount() {
+    console.log(this.props);
     window.addEventListener("keydown", (e) => {
       if (e.keyCode === 13) {
         if (this.state.msg !== "") {
@@ -79,7 +80,7 @@ export default class ChatContent extends Component {
             type: "",
             msg: this.state.msg,
             image:
-            "https://images.unsplash.com/photo-1595152772835-219674b2a8a6?crop=faces&fit=crop&w=200&h=200",
+              "https://images.unsplash.com/photo-1595152772835-219674b2a8a6?crop=faces&fit=crop&w=200&h=200",
           });
           this.setState({ chat: [...this.chatItms] });
           this.scrollToBottom();
@@ -92,6 +93,12 @@ export default class ChatContent extends Component {
   onStateChange = (e) => {
     this.setState({ msg: e.target.value });
   };
+
+  componentDidUpdate(prevProps) {
+    if (this.props.selectedRoomId !== prevProps.selectedRoomId) {
+      console.log(this.props.selectedRoomId);
+    }
+  }
 
   render() {
     return (
