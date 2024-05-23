@@ -16,14 +16,16 @@ const Signup = (props) => {
     const password = passwordRef.current.value;
 
     axios
-      .post("http://localhost:5000/users", {
-        displayName: userName,
+      .post("http://3000/user/login", {
+        userName,
         email,
         password,
       })
       .then((response) => {
-        console.log(response);
-        navigate("/");
+        makeToast("success", response.data.message);
+        localStorage.setItem("CC_Token", response.data.token);
+        navigate("/dashboard");
+        props.setupSocket();
       })
       .catch((err) => {
         console.log(err);
@@ -34,7 +36,7 @@ const Signup = (props) => {
 
   return (
     <div className="card">
-      <div className="cardHeader">Login</div>
+      <div className="cardHeader">Create Account</div>
       <div className="cardBody">
         <div className="inputGroup">
           <label htmlFor="userName">Username</label>

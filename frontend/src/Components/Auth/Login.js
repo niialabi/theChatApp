@@ -1,7 +1,7 @@
 import React from "react";
 import makeToast from "../Toaster";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./Login.css";
 
 const Login = (props) => {
@@ -56,6 +56,12 @@ const Login = (props) => {
           />
         </div>
         <button onClick={loginUser}>Login</button>
+
+        <Link to="/Signup"> {/* Use the Link component */}
+          <button>
+            Create Account
+          </button>
+        </Link>
       </div>
     </div>
   );
