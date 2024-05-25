@@ -1,9 +1,10 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Nav from './Components/Nav/Nav';
-import Login from './Components/Auth/Login';
-import Signup from './Components/Auth/Signup';
-import ChatMessage from './Components/chatMessage/ChatMessage'
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Nav from "./Components/Nav/Nav";
+import Login from "./Components/Auth/Login";
+import Signup from "./Components/Auth/Signup";
+import ChatMessage from "./Components/chatMessage/ChatMessage";
+import ChatBody from "./Components/ChatBody/ChatBody";
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/chat" element={<ChatMessage />} />
+          <Route path="/chat" element={<ChatBody />} />
         </Routes>
       </div>
     </Router>

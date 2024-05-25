@@ -43,6 +43,10 @@ router.post("/rooms", (req, res) => {
 router.post("/rooms/:id", (req, res) => {
   RoomsController.joinRoom(req, res);
 });
+// gets room information
+router.get("/rooms/:id", (req, res) => {
+  RoomsController.getRoom(req, res);
+});
 // creates a message in room.messages
 router.get("/rooms/:roomId/messages", (req, res) => {
   MessagesController.getMessages(req, res);

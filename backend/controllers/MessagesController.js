@@ -15,3 +15,14 @@ export async function getMessages(req, res) {
     return res.status(401).send({ error: "Unauthorized" });
   }
 }
+
+export async function createMessage(message) {
+  try {
+    if (!message) return false;
+    const newMsg = await dbClient.createMessage(message);
+    if (!newMsg) return false;
+    return newMsg;
+  } catch (error) {
+    console.log(error);
+  }
+}
