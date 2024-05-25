@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import "./chatMessage.css";
 import ChatListItems from "./ChatMessageItems";
 import axios from "axios";
+import SearchInput from "./SearchInput";
+import Logout from "../Auth/Logout";
+import { Link } from "react-router-dom";
+import NewChat from "./NewChat";
 
 export default class ChatMessage extends Component {
   // allChatUsers = [
@@ -107,21 +111,17 @@ export default class ChatMessage extends Component {
         <div className="chatlist__heading">
           <h2>App</h2>
           <button className="btn-nobg">
-            <i className="fa fa-ellipsis-h"></i>
+            <Logout />
           </button>
         </div>
         <div className="main__chatlist">
             <button className="btn">
-              <i className="fa fa-plus"></i>
-              <span>New Chat</span>
+              <NewChat />
            </button>
         </div>
         <div className="chatList__search">
           <div className="search_wrap">
-            <input type="text" placeholder="Search Here" required />
-            <button className="search-btn">
-              <i className="fa fa-search"></i>
-            </button>
+            <SearchInput />
           </div>
         </div>
         <div className="chatlist__items">

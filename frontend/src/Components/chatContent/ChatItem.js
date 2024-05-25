@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Avatar from "../chatMessege/Avatar";
+import Avatar from "../chatMessage/Avatar";
 import "./chatContent.css";
 
 export default class ChatItem extends Component {
