@@ -154,9 +154,33 @@ class DBClient {
 
   async findRoom(name) {
     const roomsCollection = this.db.collection("rooms");
-    const room = await roomsCollection.findOne({ name: name});
+    const room = await roomsCollection.findOne({ name: name });
     if (room) return room;
     else return false;
+  }
+
+  // gets a room by id
+  async getRoom(roomId) {
+    const collection = this.db.collection("rooms");
+    const room = collection.findOne({ _id: new ObjectId(roomId) });
+    if (!room) return false;
+    return room;
+  }
+
+  // creates a message in the room chat
+  async createMessage(message) {
+    const collection = this.db.collection("rooms");
+    const newMsg = {
+      _id: new ObjectId(),
+      owner: new ObjectId(message.owner),
+      content: message.content,
+    };
+    const result = await collection.updateOne(
+      { _id: new ObjectId(message.roomId) },
+      { $push: { messages: newMsg } }
+    );
+    if (!result.acknowledged) return false;
+    return newMsg;
   }
 }
 
