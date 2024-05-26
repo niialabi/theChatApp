@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-const NewChat = ({ onJoin }) => {
-  const [chatName, setChatName] = useState('');
+const NewChat = ({ joinChat }) => {
+  const [chatName, setChatName] = useState("");
 
   const handleJoinChat = () => {
-    if (chatName.trim() !== '') {
-      onJoin(chatName);
-      setChatName('');
+    if (chatName.trim() !== "") {
+      joinChat(chatName);
+      setChatName("");
     }
   };
 

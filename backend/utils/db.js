@@ -129,6 +129,25 @@ class DBClient {
     return true;
   }
 
+  async joinRoomByName(userId, roomId) {
+    const usersCollection = this.db.collection("users");
+    const roomsCollection = this.db.collection("rooms");
+
+    const updateRoom = await roomsCollection.updateOne(
+      { _id: roomId },
+      { $push: { members: userId } }
+    );
+    if (!updateRoom.acknowledged) return false;
+
+    const updateUser = await usersCollection.updateOne(
+      { _id: userId },
+      { $push: { rooms: roomId } }
+    );
+    if (!updateUser.acknowledged) return false;
+
+    return true;
+  }
+
   async getMessages(roomId) {
     const collection = this.db.collection("rooms");
     try {

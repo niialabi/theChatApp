@@ -63,6 +63,21 @@ export async function getProfile(req, res) {
   }
 }
 
+export async function getUserProfile(req, res) {
+  try {
+    const user = await userUtils.validateUser(req);
+    if (!user) return res.status(401).send({ error: "Unauthorized" });
+    const userId = req.params.id;
+    if (!userId) return res.status(400).send({ error: "invalid request" });
+    const wantedUser = await dbClient.findUserById(userId);
+    if (!wantedUser) return res.status(400).send({ error: "user not found" });
+    return res.status(200).send({ user: wantedUser });
+  } catch (error) {
+    console.log(error);
+    return res.status(401).send({ error: "Unauthorized" });
+  }
+}
+
 export async function updateBio(req, res) {
   try {
     const user = await userUtils.validateUser(req);

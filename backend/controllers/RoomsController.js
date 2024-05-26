@@ -58,6 +58,30 @@ export async function joinRoom(req, res) {
   }
 }
 
+export async function joinRoomByName(req, res) {
+  try {
+    const user = await userUtils.validateUser(req);
+    if (!user) return res.status(401).send({ error: "Unauthorized" });
+    const { name } = req.body;
+    if (!name) return res.status(404).send({ error: "Missing name" });
+    const checkRoom = await dbClient.findRoom(name);
+    if (!checkRoom)
+      return res.status(400).send({ error: "room doesn't exist" });
+    // check if user is already in the room
+    for (const joinedRoomId of user.rooms) {
+      if (checkRoom._id == joinedRoomId)
+        return res.status(400).send({ error: "user already in this room" });
+    }
+    // joins a room: adds a room id to user.rooms and adds a user id to room.members
+    const result = await dbClient.joinRoomByName(user._id, checkRoom._id);
+    if (!result) return res.status(400).send({ error: "failed to join" });
+    return res.status(200).send({ room: checkRoom });
+  } catch (error) {
+    console.log(error);
+    return res.status(401).send({ error: "Unauthorized" });
+  }
+}
+
 export async function getRoom(req, res) {
   try {
     // check's the X-Token in the request and get the user info
