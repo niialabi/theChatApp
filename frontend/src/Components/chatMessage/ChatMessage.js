@@ -4,7 +4,6 @@ import ChatListItems from "./ChatMessageItems";
 import axios from "axios";
 import SearchInput from "./SearchInput";
 import Logout from "../Auth/Logout";
-import { Link } from "react-router-dom";
 import NewChat from "./NewChat";
 
 export default class ChatMessage extends Component {
@@ -105,6 +104,29 @@ export default class ChatMessage extends Component {
       });
   }
 
+  joinChat = (chatName) => {
+    const token = localStorage.getItem("X-Token");
+    axios
+      .post(
+        "http://localhost:5000/joinChat",
+        { name: chatName },
+        {
+          headers: {
+            "X-Token": token,
+          },
+        }
+      )
+      .then((response) => {
+        const newRoom = response.data.room;
+        this.setState((prevState) => ({
+          rooms: [...prevState.rooms, newRoom],
+        }));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   render() {
     return (
       <div className="main__chatlist">
@@ -115,9 +137,9 @@ export default class ChatMessage extends Component {
           </button>
         </div>
         <div className="main__chatlist">
-            <button className="btn">
-              <NewChat />
-           </button>
+          <button className="btn">
+            <NewChat joinChat={this.joinChat} />
+          </button>
         </div>
         <div className="chatList__search">
           <div className="search_wrap">

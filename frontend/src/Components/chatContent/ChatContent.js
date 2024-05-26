@@ -115,7 +115,7 @@ export default class ChatContent extends Component {
         })
         .catch((error) => {
           console.log(error);
-          if (error.resposne.data.error) console.log(error);
+          if (error.resposne.data.error) console.log(error.response.data.error);
         });
 
       if (prevProps.selectedRoomId) this.leaveRoom(prevProps.selectedRoomId);
@@ -178,7 +178,8 @@ export default class ChatContent extends Component {
                     <ChatItem
                       animationDelay={index + 2}
                       key={msg._id}
-                      user={msg.owner ? msg.owner : "me"}
+                      side={msg.owner === this.props.userId ? "me" : "other"}
+                      owner={msg.owner}
                       content={msg.content}
                     />
                   );

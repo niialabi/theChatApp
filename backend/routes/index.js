@@ -30,6 +30,9 @@ router.get("/disconnect", (req, res) => {
 router.get("/users/me", (req, res) => {
   UsersController.getMe(req, res);
 });
+router.get("/users/:id", (req, res) => {
+  UsersController.getUserProfile(req, res);
+});
 // gets user's joined rooms
 router.get("/rooms", (req, res) => {
   RoomsController.getRooms(req, res);
@@ -58,6 +61,10 @@ router.get("/profile", (req, res) => {
 // updates user's bio
 router.post("/profile/bio", (req, res) => {
   UsersController.updateBio(req, res);
+});
+// joins a chat room by name
+router.post("/joinChat", (req, res) => {
+  RoomsController.joinRoomByName(req, res);
 });
 
 export default router;
