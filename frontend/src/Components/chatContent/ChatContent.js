@@ -141,7 +141,7 @@ export default class ChatContent extends Component {
   };
 
   leaveRoom = (roomId) => {
-    this.socket.leave(`room-${roomId}`);
+    this.socket.emit("leaveRoom", roomId);
   };
 
   onStateChange = (e) => {
