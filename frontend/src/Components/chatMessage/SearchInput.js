@@ -1,43 +1,32 @@
 import { useState } from "react";
-import { IoSearchSharp } from "react-icons/io5";
-import useChatMessages from "../../hook/useChatMessages";
 import toast from "react-hot-toast";
 
-const SearchInput = () => {
-	const [search, setSearch] = useState("");
-	const { conversations, selectConversation } = useChatMessages();
+const SearchInput = ({ createRoom }) => {
+  const [name, setName] = useState("");
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		if (!search) return;
-		if (search.length < 3) {
-			return toast.error("Search must be at least 3 characters long.");
-		}
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!name) return;
+    if (name.length < 3) {
+      return toast.error("name must be at least 3 characters long.");
+    }
+    createRoom(name);
+  };
 
-		const conversation = conversations.find((c) => c.fullName.toLowerCase().includes(search.toLowerCase()));
-
-		if (conversation) {
-			selectConversation(conversation);
-			setSearch("");
-		} else {
-			toast.error("User not found!");
-		}
-	};
-
-	return (
-		<form onSubmit={handleSubmit} className='flex items-center gap-2'>
-			<input
-				type='text'
-				placeholder='Search…'
-				className='input input-bordered rounded-full'
-				value={search}
-				onChange={(e) => setSearch(e.target.value)}
-			/>
-			<button type='submit' className='btn btn-circle bg-sky-500 text-white'>
-				<IoSearchSharp className='w-6 h-6 outline-none' />
-			</button>
-		</form>
-	);
+  return (
+    <form onSubmit={handleSubmit} className="flex items-center gap-2">
+      <input
+        type="text"
+        placeholder="New chat's name"
+        className="input input-bordered rounded-full"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <button type="submit" className="btn btn-circle bg-sky-500 text-white">
+        +
+      </button>
+    </form>
+  );
 };
 
 export default SearchInput;

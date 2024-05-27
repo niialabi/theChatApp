@@ -127,6 +127,29 @@ export default class ChatMessage extends Component {
       });
   };
 
+  createRoom = (chatName) => {
+    const token = localStorage.getItem("X-Token");
+    axios
+      .post(
+        "http://localhost:5000/rooms",
+        { name: chatName },
+        {
+          headers: {
+            "X-Token": token,
+          },
+        }
+      )
+      .then((response) => {
+        const newRoom = response.data.room;
+        this.setState((prevState) => ({
+          rooms: [...prevState.rooms, newRoom],
+        }));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   render() {
     return (
       <div className="main__chatlist">
@@ -143,7 +166,7 @@ export default class ChatMessage extends Component {
         </div>
         <div className="chatList__search">
           <div className="search_wrap">
-            <SearchInput />
+            <SearchInput createRoom={this.createRoom} />
           </div>
         </div>
         <div className="chatlist__items">

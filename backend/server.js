@@ -35,6 +35,11 @@ io.on("connection", (socket) => {
     console.log(`User joined room: room-${roomId}`);
   });
 
+  socket.on("leaveRoom", (roomId) => {
+    socket.leave(`room-${roomId}`);
+    console.log(`User left room: room-${roomId}`);
+  });
+
   socket.on("message", async (data) => {
     if (data.message.owner && data.message.content && data.message.roomId) {
       try {
