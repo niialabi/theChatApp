@@ -31,6 +31,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("joinRoom", (roomId) => {
+    console.log("hi back");
     socket.join(`room-${roomId}`);
     console.log(`User joined room: room-${roomId}`);
   });
