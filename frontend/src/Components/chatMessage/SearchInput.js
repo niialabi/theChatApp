@@ -11,6 +11,7 @@ const SearchInput = ({ createRoom }) => {
       return toast.error("name must be at least 3 characters long.");
     }
     createRoom(name);
+    setName("");
   };
 
   return (

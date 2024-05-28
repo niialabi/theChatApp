@@ -119,29 +119,48 @@ export default class ChatContent extends Component {
         });
 
       if (prevProps.selectedRoomId) this.leaveRoom(prevProps.selectedRoomId);
-      this.joinRoom(roomId);
+      if (this.props.selectedRoomId) this.joinRoom(this.props.selectedRoomId);
 
-      this.socket.on(`message`, (data) => {
-        console.log(data);
-        this.setState(
-          (prevState) => ({
-            room: {
-              ...prevState.room,
-              messages: [...prevState.room.messages, data.message],
-            },
-          }),
-          this.scrollToBottom
-        );
-      });
+      // this.socket.on(`message`, (data) => {
+      //   console.log(data);
+      //   this.setState(
+      //     (prevState) => ({
+      //       room: {
+      //         ...prevState.room,
+      //         messages: [...prevState.room.messages, data.message],
+      //       },
+      //     }),
+      //     this.scrollToBottom
+      //   );
+      // });
     }
+  }
+
+  componentWillUnmount() {
+    this.socket.off("message");
+    this.socket.disconnect();
   }
 
   joinRoom = (roomId) => {
     this.socket.emit("joinRoom", roomId);
+    this.socket.on("message", this.handleMessage);
   };
 
   leaveRoom = (roomId) => {
     this.socket.emit("leaveRoom", roomId);
+    this.socket.off("message", this.handleMessage);
+  };
+
+  handleMessage = (data) => {
+    this.setState(
+      (prevState) => ({
+        room: {
+          ...prevState.room,
+          messages: [...prevState.room.messages, data.message],
+        },
+      }),
+      this.scrollToBottom
+    );
   };
 
   onStateChange = (e) => {

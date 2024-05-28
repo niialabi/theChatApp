@@ -16,7 +16,7 @@ const Signup = (props) => {
     const password = passwordRef.current.value;
 
     axios
-      .post("http://3000/user/login", {
+      .post("http://3000/user", {
         userName,
         email,
         password,
